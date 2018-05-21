@@ -19,19 +19,24 @@ if (isset($_GET['name']) && !empty($_GET['name'])) {
     if (isset($_POST['sended']) && !empty($_POST['sended'])) {
         $arr = [];
         $arr = $_POST;
-        $correctAnswers = 0;
+        $correctAnswersNumber = 0;
+        $correctAnswersQues = [];
+        $correctAnswersAns = [];
+
         foreach ($arr as $key => $value) {
             $parts = explode("-", $key);
             $questId = (string)$parts[0];
             $answerId = (string)$parts[1];
 
             if ($currentTest[$questId]['answers'][$answerId]['correct']) {
-                $correctAnswers++;
+                $correctAnswersNumber++;
+                array_push($correctAnswersQues, $currentTest[$questId]['body']);
             }
 
         }
 
-        echo '<h4>Кол-во правильных ответов - ' . $correctAnswers . '</h4>';
+        echo '<h4>Кол-во правильных ответов - ' . $correctAnswersNumber . '</h4>';
+        echo '<h4>Правильно ответили на вопросы - ' . implode(', ', $correctAnswersQues) . '</h4>';
     }
 
 }
