@@ -6,11 +6,11 @@ if (isset($_GET['name']) && !empty($_GET['name'])) {
 
     echo '<form action="" method="POST">';
     echo '<input type="hidden" name="sended" value="1"/>';
-    foreach ($currentTest as $questionKey => $question) {
+    foreach ($currentTest as $questionKey => $data) {
         echo '<fieldset>';
-        echo '<legend>' . $question['body'] . '</legend>';
-        foreach ($question['answers'] as $answerKey => $answer) {
-            echo '<label><input type="radio" name="' . $questionKey . '-' . $answerKey . '">' . $answer['body'] . '</label>';
+        echo '<legend>' . $data['body'] . '</legend>';
+        foreach ($data['answers'] as $answerKey => $answer) {
+            echo '<label><input type="radio" name="' . $questionKey . '" value="' . $answerKey . '">' . $answer['body'] . '</label>';
         }
         echo '</fieldset>';
     }
@@ -21,16 +21,12 @@ if (isset($_GET['name']) && !empty($_GET['name'])) {
         $arr = $_POST;
         $correctAnswersNumber = 0;
         $correctAnswersQues = [];
-        $correctAnswersAns = [];
 
         foreach ($arr as $key => $value) {
-            $parts = explode("-", $key);
-            $questId = (string)$parts[0];
-            $answerId = (string)$parts[1];
 
-            if ($currentTest[$questId]['answers'][$answerId]['correct']) {
+            if ($currentTest[$key]['answers'][$value]['correct']) {
                 $correctAnswersNumber++;
-                array_push($correctAnswersQues, $currentTest[$questId]['body']);
+                array_push($correctAnswersQues, $currentTest[$key]['body']);
             }
 
         }
