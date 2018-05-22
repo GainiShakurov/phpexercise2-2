@@ -11,7 +11,6 @@ $uploaddir = __DIR__ . '/tests/';
 /* Добавил время к имени, чтобы можно было загружать файлы с одним и тем же именем */
 $uploadfile = $uploaddir . basename($_FILES['testfile']['name'], ".json") . '-' . strtotime("now") . '.json';
 
-echo '<pre>';
 if (move_uploaded_file($_FILES['testfile']['tmp_name'], $uploadfile)) {
     echo "Файл корректен и был успешно загружен.\n";
 }
